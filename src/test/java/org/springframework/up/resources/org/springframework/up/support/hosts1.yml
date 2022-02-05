@@ -1,0 +1,4 @@
+hosts:
+  github.com:
+    token: faketoken
+    user: fakeuser
