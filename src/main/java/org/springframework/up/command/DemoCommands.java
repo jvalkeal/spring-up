@@ -58,11 +58,5 @@ public class DemoCommands {
 		else {
 			return "crap";
 		}
-
-		// GitHub github = new GitHubBuilder().withOAuthToken(token).build();
-		// GHRepository atest7Repo = github.getRepository("jvalkeal/atest7");
-		// GHContent readme = atest7Repo.getReadme();
-		// byte[] readmeBytes = FileCopyUtils.copyToByteArray(readme.read());
-		// log.info("README {}", new String(readmeBytes));
 	}
 }

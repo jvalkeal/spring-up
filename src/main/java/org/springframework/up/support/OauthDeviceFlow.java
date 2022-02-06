@@ -17,7 +17,6 @@ package org.springframework.up.support;
 
 import java.net.URI;
 import java.time.Duration;
-import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.slf4j.Logger;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -40,8 +38,6 @@ public class OauthDeviceFlow {
 
 	private final static Logger log = LoggerFactory.getLogger(OauthDeviceFlow.class);
 	private WebClient.Builder webClientBuilder;
-	// private final static ParameterizedTypeReference<Map<String, String>> responseTypeReference =
-	// 		new ParameterizedTypeReference<Map<String, String>>() {};
 	private OauthDeviceFlow(WebClient.Builder webClientBuilder) {
 		Assert.notNull(webClientBuilder, "webClientBuilder must be set");
 		this.webClientBuilder = webClientBuilder;
@@ -90,6 +86,9 @@ public class OauthDeviceFlow {
 			;
 	}
 
+	/**
+	 *
+	 */
 	public static class RequestCodeResponse {
 
 		@JsonProperty("device_code")
@@ -146,8 +145,17 @@ public class OauthDeviceFlow {
 		public void setVerificationUri(URI verificationUri) {
 			this.verificationUri = verificationUri;
 		}
+
+		@Override
+		public String toString() {
+			return "RequestCodeResponse [deviceCode=" + deviceCode + ", expiresIn=" + expiresIn + ", interval="
+					+ interval + ", userCode=" + userCode + ", verificationUri=" + verificationUri + "]";
+		}
 	}
 
+	/**
+	 *
+	 */
 	public static class WaitTokenResponse {
 
 		@JsonProperty("error")
@@ -200,5 +208,4 @@ public class OauthDeviceFlow {
 					+ ", tokenType=" + tokenType + "]";
 		}
 	}
-
 }

@@ -58,8 +58,6 @@ public class GitHubCommands extends AbstractShellComponent {
 	private final static String HELP_LOGIN = "Authenticate with a GitHub host";
 	private final static String HELP_LOGIN_SCOPES = "Additional authentication scopes for gh to have";
 	private final static String HELP_LOGIN_WITHTOKEN = "Read token from standard input";
-	private final static String HELP_LOGOUT = "Log out of a GitHub host";
-	private final static String HELP_REFRESH = "Refresh stored GitHub authentication credentials";
 
 	@Autowired
 	private ResourceLoader resourceLoader;
@@ -142,27 +140,6 @@ public class GitHubCommands extends AbstractShellComponent {
 			getTerminal().output().write(out.getBytes());
 		} catch (IOException e) {
 		}
-	}
-
-	@ShellMethod(key = "auth github logout", value = HELP_LOGOUT)
-	public String logout() {
-		UpCliConfigFiles upCliConfigFiles = new UpCliConfigFiles();
-		Map<String, Host> hosts = upCliConfigFiles.getHosts();
-		Host githubHost = hosts.get("github.com");
-		if (githubHost != null) {
-			return "should logout";
-		}
-		else {
-			return "not logged in to any hosts";
-		}
-
-		// ? Are you sure you want to log out of github.com account 'jvalkeal'? (Y/n)
-	}
-
-	@ShellMethod(key = "auth github refresh", value = HELP_REFRESH)
-	public void refresh() {
-		// ! First copy your one-time code: A84E-F1EC
-		// - Press Enter to open github.com in your browser... ^C
 	}
 
 	private String askLoginType() {
