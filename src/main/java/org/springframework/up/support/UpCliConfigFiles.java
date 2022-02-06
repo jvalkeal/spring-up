@@ -52,8 +52,17 @@ public class UpCliConfigFiles {
 			return hosts.getHosts();
 		}
 		else {
-			return Collections.emptyMap();
+			return new HashMap<>();
 		}
+	}
+
+	public void setHosts(Map<String, Host> hosts) {
+		YamlConfigFile yamlConfigFile = new YamlConfigFile();
+		Path configDir = getConfigDir();
+		Path configFile = configDir.resolve(Path.of(HOSTS));
+		Hosts hosts2 = new Hosts();
+		hosts2.setHosts(hosts);
+		yamlConfigFile.write(configFile, hosts2);
 	}
 
 	private Path getConfigDir() {
@@ -96,15 +105,15 @@ public class UpCliConfigFiles {
 
 	public static class Host {
 
-		private String oauthToken;
+		private String token;
 		private String user;
 
-		public String getOauthToken() {
-			return oauthToken;
+		public String getToken() {
+			return token;
 		}
 
-		public void setOauthToken(String oauthToken) {
-			this.oauthToken = oauthToken;
+		public void setToken(String token) {
+			this.token = token;
 		}
 
 		public String getUser() {

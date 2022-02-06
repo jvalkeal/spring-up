@@ -15,36 +15,10 @@
  */
 package org.springframework.up.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-/**
- * Configuration properties for cli.
- *
- * @author Janne Valkealahti
- */
-@ConfigurationProperties(prefix = "spring.up")
-public class UpCliProperties {
-
-	private Github github = new Github();
-
-	public Github getGithub() {
-		return github;
-	}
-
-	public void setGithub(Github github) {
-		this.github = github;
-	}
-
-	public static class Github {
-
-		private String clientId;
-
-		public String getClientId() {
-			return clientId;
-		}
-
-		public void setClientId(String clientId) {
-			this.clientId = clientId;
-		}
-	}
+@Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(UpCliProperties.class)
+public class UpCliConfiguration {
 }

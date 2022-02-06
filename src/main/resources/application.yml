@@ -8,18 +8,20 @@ spring:
         root-command: spring-up
       version:
         show-git-short-commit-id: true
+  up:
+    github:
+      client-id: e4983cc3c5a6a2066b63
 
 ## disable console logging
 logging:
   pattern:
     console:
 ## log debug from a cli
-#  file:
-#    name: shell.log
-#  level:
-#    root: debug
-#    org:
-#      springframework:
-#        experimental:
-#          up: debug
-#        shell: debug
+  file:
+    name: shell.log
+  level:
+    # root: debug
+    org:
+      springframework:
+        up: debug
+        shell: debug
