@@ -42,14 +42,16 @@ public class UpCliUserConfigTests {
 
 	@Test
 	public void test() {
-		// UpCliUserConfig config = new UpCliUserConfig(pathProvider);
-		// UpCliUserConfig.Hosts hosts = new UpCliUserConfig.Hosts();
-		// Map<String, UpCliUserConfig.Host> hostsMap = new HashMap<>();
-		// hostsMap.put("github.com", new UpCliUserConfig.Host("faketoken", "user"));
-		// hosts.setHosts(hostsMap);
-		// config.setHosts(hosts);
-		// assertThat(config.getHosts()).isNotNull();
-		// assertThat(config.getHosts().get("github.com")).isNotNull();
-		// assertThat(config.getHosts().get("github.com").getOauthToken()).isEqualTo("faketoken");
+		System.out.println("XXX3 " + fileSystem);
+		System.out.println("XXX4 " + pathProvider);
+		UpCliUserConfig config = new UpCliUserConfig(pathProvider);
+		UpCliUserConfig.Hosts hosts = new UpCliUserConfig.Hosts();
+		Map<String, UpCliUserConfig.Host> hostsMap = new HashMap<>();
+		hostsMap.put("github.com", new UpCliUserConfig.Host("faketoken", "user"));
+		hosts.setHosts(hostsMap);
+		config.setHosts(hosts);
+		assertThat(config.getHosts()).isNotNull();
+		assertThat(config.getHosts().get("github.com")).isNotNull();
+		assertThat(config.getHosts().get("github.com").getOauthToken()).isEqualTo("faketoken");
 	}
 }
