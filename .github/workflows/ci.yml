@@ -37,7 +37,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: buildlogs
+          name: buildlogs-${{ matrix.java }}
           path: build/buildlogs.tar.gz
   native:
     needs: [build]

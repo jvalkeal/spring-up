@@ -82,17 +82,20 @@ public class UserConfig<T> {
 		Path path;
 		if (StringUtils.hasText(System.getenv(configDirEnv))) {
 			path = pathProvider.apply(System.getenv(configDirEnv));
+			System.out.println("DDD1 " + path);
 		}
 		else if (StringUtils.hasText(System.getenv(XDG_CONFIG_HOME))) {
 			path = pathProvider.apply(System.getProperty(XDG_CONFIG_HOME)).resolve(configDirName);
+			System.out.println("DDD2 " + path);
 		}
 		else if (isWindows() && StringUtils.hasText(System.getenv(APP_DATA))) {
 			path = pathProvider.apply(System.getProperty(APP_DATA)).resolve(configDirName);
+			System.out.println("DDD3 " + path);
 		}
 		else {
-			System.out.println("DDD1 " + System.getProperty("user.home"));
+			System.out.println("DDD4 " + System.getProperty("user.home"));
 			path = pathProvider.apply(System.getProperty("user.home")).resolve(".config").resolve(configDirName);
-			System.out.println("DDD2 " + path);
+			System.out.println("DDD5 " + path);
 		}
 		return path;
 	}
