@@ -90,7 +90,9 @@ public class UserConfig<T> {
 			path = pathProvider.apply(System.getProperty(APP_DATA)).resolve(configDirName);
 		}
 		else {
+			System.out.println("DDD1 " + System.getProperty("user.home"));
 			path = pathProvider.apply(System.getProperty("user.home")).resolve(".config").resolve(configDirName);
+			System.out.println("DDD2 " + path);
 		}
 		return path;
 	}
