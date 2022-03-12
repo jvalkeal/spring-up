@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.apache.maven.model.Model;
-import org.apache.tika.Tika;
+// import org.apache.tika.Tika;
 import org.apache.tools.ant.util.FileUtils;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.jline.utils.AttributedStringBuilder;
@@ -204,27 +204,27 @@ public class BootCommands extends AbstractUpCliCommands {
 			File srcFile = new File(fromDir, fileName);
 			File destFile = new File(toDir, fileName);
 			logger.debug("Copy from " + srcFile + " to " + destFile);
-			Tika tika = new Tika();
-			try {
-				FileUtils.getFileUtils().copyFile(srcFile, destFile);
-				if (projectInfo.isPresent()) {
-					if (tika.detect(destFile).startsWith("text") || tika.detect(destFile).contains("xml")) {
-						List<String> replacedLines = new ArrayList<>();
-						List<String> originalLines = Files.readAllLines(destFile.toPath());
-						for (String originalLine : originalLines) {
-							replaceString(projectName, projectInfo, destFile, replacedLines, originalLine);
-						}
-						Files.write(destFile.toPath(), replacedLines);
-					}
-					// set executable file system permissions if needed.
-					if (srcFile.canExecute()) {
-						destFile.setExecutable(true);
-					}
-				}
-			} catch (IOException e) {
-				throw new UpException(
-						"Could not copy files from " + fromDir.getAbsolutePath() + " to " + toDir.getAbsolutePath());
-			}
+			// Tika tika = new Tika();
+			// try {
+			// 	FileUtils.getFileUtils().copyFile(srcFile, destFile);
+			// 	if (projectInfo.isPresent()) {
+			// 		if (tika.detect(destFile).startsWith("text") || tika.detect(destFile).contains("xml")) {
+			// 			List<String> replacedLines = new ArrayList<>();
+			// 			List<String> originalLines = Files.readAllLines(destFile.toPath());
+			// 			for (String originalLine : originalLines) {
+			// 				replaceString(projectName, projectInfo, destFile, replacedLines, originalLine);
+			// 			}
+			// 			Files.write(destFile.toPath(), replacedLines);
+			// 		}
+			// 		// set executable file system permissions if needed.
+			// 		if (srcFile.canExecute()) {
+			// 			destFile.setExecutable(true);
+			// 		}
+			// 	}
+			// } catch (IOException e) {
+			// 	throw new UpException(
+			// 			"Could not copy files from " + fromDir.getAbsolutePath() + " to " + toDir.getAbsolutePath());
+			// }
 		}
 
 		AttributedStringBuilder sb = new AttributedStringBuilder();

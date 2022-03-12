@@ -46,7 +46,7 @@ dependencies {
 	implementation 'org.openrewrite:rewrite-java-11'
 	implementation 'org.apache.ant:ant'
 	implementation 'org.apache.maven:maven-model'
-	implementation 'org.apache.tika:tika-core'
+	// implementation 'org.apache.tika:tika-core'
 	compileOnly 'org.springframework.experimental:spring-aot'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.google.jimfs:jimfs'
@@ -62,7 +62,7 @@ dependencyManagement {
 		dependency "org.openrewrite:rewrite-java-11:${openrewriteVersion}"
 		dependency "org.apache.ant:ant:${antVersion}"
 		dependency "org.apache.maven:maven-model:${mavenModelVersion}"
-		dependency "org.apache.tika:tika-core:${tikaVersion}"
+		// dependency "org.apache.tika:tika-core:${tikaVersion}"
 		dependency "com.google.jimfs:jimfs:${jimfsVersion}"
 	}
 	imports {
