@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import org.apache.maven.model.Model;
+// import org.apache.maven.model.Model;
 // import org.apache.tika.Tika;
 import org.apache.tools.ant.util.FileUtils;
-import org.codehaus.plexus.util.DirectoryScanner;
+// import org.codehaus.plexus.util.DirectoryScanner;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.openrewrite.InMemoryExecutionContext;
@@ -194,38 +194,38 @@ public class BootCommands extends AbstractUpCliCommands {
 		File fromDir = repositoryContentsPath.toFile();
 		File toDir = createProjectDirectory(projectName);
 
-		DirectoryScanner ds = new DirectoryScanner();
-		ds.setBasedir(fromDir);
-		ds.scan();
-		String[] fileNames = ds.getIncludedFiles();
+		// DirectoryScanner ds = new DirectoryScanner();
+		// ds.setBasedir(fromDir);
+		// ds.scan();
+		// String[] fileNames = ds.getIncludedFiles();
 
 		toDir.mkdirs();
-		for (String fileName : fileNames) {
-			File srcFile = new File(fromDir, fileName);
-			File destFile = new File(toDir, fileName);
-			logger.debug("Copy from " + srcFile + " to " + destFile);
-			// Tika tika = new Tika();
-			// try {
-			// 	FileUtils.getFileUtils().copyFile(srcFile, destFile);
-			// 	if (projectInfo.isPresent()) {
-			// 		if (tika.detect(destFile).startsWith("text") || tika.detect(destFile).contains("xml")) {
-			// 			List<String> replacedLines = new ArrayList<>();
-			// 			List<String> originalLines = Files.readAllLines(destFile.toPath());
-			// 			for (String originalLine : originalLines) {
-			// 				replaceString(projectName, projectInfo, destFile, replacedLines, originalLine);
-			// 			}
-			// 			Files.write(destFile.toPath(), replacedLines);
-			// 		}
-			// 		// set executable file system permissions if needed.
-			// 		if (srcFile.canExecute()) {
-			// 			destFile.setExecutable(true);
-			// 		}
-			// 	}
-			// } catch (IOException e) {
-			// 	throw new UpException(
-			// 			"Could not copy files from " + fromDir.getAbsolutePath() + " to " + toDir.getAbsolutePath());
-			// }
-		}
+		// for (String fileName : fileNames) {
+		// 	File srcFile = new File(fromDir, fileName);
+		// 	File destFile = new File(toDir, fileName);
+		// 	logger.debug("Copy from " + srcFile + " to " + destFile);
+		// 	// Tika tika = new Tika();
+		// 	// try {
+		// 	// 	FileUtils.getFileUtils().copyFile(srcFile, destFile);
+		// 	// 	if (projectInfo.isPresent()) {
+		// 	// 		if (tika.detect(destFile).startsWith("text") || tika.detect(destFile).contains("xml")) {
+		// 	// 			List<String> replacedLines = new ArrayList<>();
+		// 	// 			List<String> originalLines = Files.readAllLines(destFile.toPath());
+		// 	// 			for (String originalLine : originalLines) {
+		// 	// 				replaceString(projectName, projectInfo, destFile, replacedLines, originalLine);
+		// 	// 			}
+		// 	// 			Files.write(destFile.toPath(), replacedLines);
+		// 	// 		}
+		// 	// 		// set executable file system permissions if needed.
+		// 	// 		if (srcFile.canExecute()) {
+		// 	// 			destFile.setExecutable(true);
+		// 	// 		}
+		// 	// 	}
+		// 	// } catch (IOException e) {
+		// 	// 	throw new UpException(
+		// 	// 			"Could not copy files from " + fromDir.getAbsolutePath() + " to " + toDir.getAbsolutePath());
+		// 	// }
+		// }
 
 		AttributedStringBuilder sb = new AttributedStringBuilder();
 		sb.style(sb.style().foreground(AttributedStyle.GREEN));
@@ -250,14 +250,14 @@ public class BootCommands extends AbstractUpCliCommands {
 	}
 
 	private Optional<ProjectInfo> getProjectInfo(Path repositoryContentsPath) {
-		File contentDirectory = repositoryContentsPath.toFile();
-		File pomFile = new File(contentDirectory, "pom.xml");
-		if (pomFile.exists()) {
-			PomReader pomReader = new PomReader();
-			Model model = pomReader.readPom(pomFile);
-			ProjectInfo projectInfo = new ProjectInfo(model.getName(), model.getGroupId(), model.getArtifactId(), model.getVersion());
-			return Optional.of(projectInfo);
-		}
+		// File contentDirectory = repositoryContentsPath.toFile();
+		// File pomFile = new File(contentDirectory, "pom.xml");
+		// if (pomFile.exists()) {
+		// 	PomReader pomReader = new PomReader();
+		// 	Model model = pomReader.readPom(pomFile);
+		// 	ProjectInfo projectInfo = new ProjectInfo(model.getName(), model.getGroupId(), model.getArtifactId(), model.getVersion());
+		// 	return Optional.of(projectInfo);
+		// }
 		// TODO search settings.gradle
 		return Optional.empty();
 	}
