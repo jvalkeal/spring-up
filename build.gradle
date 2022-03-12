@@ -41,7 +41,7 @@ dependencies {
 	implementation 'io.projectreactor.addons:reactor-extra'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
 	implementation 'org.rauschig:jarchivelib'
-	implementation 'org.kohsuke:github-api'
+	// implementation 'org.kohsuke:github-api'
 	// implementation 'org.gitlab4j:gitlab4j-api'
 	implementation 'org.openrewrite:rewrite-java-11'
 	implementation 'org.apache.ant:ant'
@@ -57,7 +57,7 @@ dependencyManagement {
 		dependency "org.springframework.experimental:spring-aot:0.11.3"
 		dependency "org.springframework.shell:spring-shell-starter-jna:${springShellVersion}"
 		dependency "org.rauschig:jarchivelib:${jarchivelibVersion}"
-		dependency "org.kohsuke:github-api:${kohsukeVersion}"
+		// dependency "org.kohsuke:github-api:${kohsukeVersion}"
 		// dependency "org.gitlab4j:gitlab4j-api:${gitlab4jVersion}"
 		dependency "org.openrewrite:rewrite-java-11:${openrewriteVersion}"
 		dependency "org.apache.ant:ant:${antVersion}"

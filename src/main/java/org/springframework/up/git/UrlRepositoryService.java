@@ -35,9 +35,9 @@ import java.util.concurrent.atomic.AtomicReference;
 // import org.gitlab4j.api.GitLabApiException;
 // import org.gitlab4j.api.models.Branch;
 // import org.gitlab4j.api.models.Tag;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
+// import org.kohsuke.github.GHRepository;
+// import org.kohsuke.github.GitHub;
+// import org.kohsuke.github.GitHubBuilder;
 import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
 import org.slf4j.Logger;
@@ -81,9 +81,9 @@ public class UrlRepositoryService implements SourceRepositoryService {
 		}
 		else {
 			GitRepoUrlRef gitRepoUrlRef = GitRepoUrlRef.fromUriString(sourceRepoUrl);
-			if (gitRepoUrlRef.getRepoUrl().toString().contains("github.com")) {
-				contentPath = retrieveGitHubRepositoryContents(gitRepoUrlRef, targetPath);
-			}
+			// if (gitRepoUrlRef.getRepoUrl().toString().contains("github.com")) {
+			// 	contentPath = retrieveGitHubRepositoryContents(gitRepoUrlRef, targetPath);
+			// }
 			// else {
 			// 	contentPath = retrieveGitLabRepositoryContents(gitRepoUrlRef, targetPath);
 			// }
@@ -111,63 +111,63 @@ public class UrlRepositoryService implements SourceRepositoryService {
 	/**
 	 * Retrieve contents from a GitHub repository.
 	 */
-	private Path retrieveGitHubRepositoryContents(GitRepoUrlRef url, Path targetPath) {
+	// private Path retrieveGitHubRepositoryContents(GitRepoUrlRef url, Path targetPath) {
 
-		try {
-			URI gitUri = new URI(url.getRepoUrl().toString());
-			String token = this.templateRepositoryProperties.getTokens().get(gitUri.getHost());
-			GitHub github;
-			if (token == null) {
-				github = GitHub.connectAnonymously();
-			}
-			else {
-				github = new GitHubBuilder().withOAuthToken(token).build();
-			}
-			String repo = gitUri.getPath().substring(1);
-			if (repo.endsWith(".git")) {
-				repo = repo.substring(0, repo.length() - 4);
-			}
-			String ref = url.getRef();
-			GHRepository ghRepository = github.getRepository(repo);
-			InputStream inputStream = ghRepository
-					.readTar((inputstream) -> new ByteArrayInputStream(StreamUtils.copyToByteArray(inputstream)), ref);
+	// 	try {
+	// 		URI gitUri = new URI(url.getRepoUrl().toString());
+	// 		String token = this.templateRepositoryProperties.getTokens().get(gitUri.getHost());
+	// 		GitHub github;
+	// 		if (token == null) {
+	// 			github = GitHub.connectAnonymously();
+	// 		}
+	// 		else {
+	// 			github = new GitHubBuilder().withOAuthToken(token).build();
+	// 		}
+	// 		String repo = gitUri.getPath().substring(1);
+	// 		if (repo.endsWith(".git")) {
+	// 			repo = repo.substring(0, repo.length() - 4);
+	// 		}
+	// 		String ref = url.getRef();
+	// 		GHRepository ghRepository = github.getRepository(repo);
+	// 		InputStream inputStream = ghRepository
+	// 				.readTar((inputstream) -> new ByteArrayInputStream(StreamUtils.copyToByteArray(inputstream)), ref);
 
-			File targetFile = targetPath.toFile();
-			Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
-			try {
-				archiver.extract(inputStream, targetPath.toFile());
-			} catch (Exception e) {
-				throw new UpException(String.format("Extraction error to %s", targetFile.getAbsolutePath()), e);
-			}
+	// 		File targetFile = targetPath.toFile();
+	// 		Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
+	// 		try {
+	// 			archiver.extract(inputStream, targetPath.toFile());
+	// 		} catch (Exception e) {
+	// 			throw new UpException(String.format("Extraction error to %s", targetFile.getAbsolutePath()), e);
+	// 		}
 
-			Path unTar = Paths.get(targetPath.toFile().getAbsolutePath());
-			AtomicReference<Path> tarDir = new AtomicReference<>();
-			Files.list(unTar.toFile().toPath()).forEach((path) -> {
-				if (path.toFile().isDirectory()) {
-					if (tarDir.get() != null) {
-						throw new UpException("Detected multiple directories '" + tarDir.get().toFile().getName()
-								+ "' and '" + path.toFile().getName() + " in downloaded zip file");
-					}
-					tarDir.set(path);
-				}
-			});
-			if (tarDir.get() == null) {
-				throw new UpException(
-						"Downloaded zip file not unzipped correctly into " + unTar.toFile().getAbsolutePath());
-			}
-			Path contentPath;
-			if (StringUtils.hasText(url.getSubPath())) {
-				contentPath = Paths.get(tarDir.get().toFile().getAbsolutePath(), url.getSubPath());
-			}
-			else {
-				contentPath = tarDir.get();
-			}
-			return contentPath;
-		}
-		catch (IOException | URISyntaxException e) {
-			throw new UpException("Failed processing " + url, e);
-		}
-	}
+	// 		Path unTar = Paths.get(targetPath.toFile().getAbsolutePath());
+	// 		AtomicReference<Path> tarDir = new AtomicReference<>();
+	// 		Files.list(unTar.toFile().toPath()).forEach((path) -> {
+	// 			if (path.toFile().isDirectory()) {
+	// 				if (tarDir.get() != null) {
+	// 					throw new UpException("Detected multiple directories '" + tarDir.get().toFile().getName()
+	// 							+ "' and '" + path.toFile().getName() + " in downloaded zip file");
+	// 				}
+	// 				tarDir.set(path);
+	// 			}
+	// 		});
+	// 		if (tarDir.get() == null) {
+	// 			throw new UpException(
+	// 					"Downloaded zip file not unzipped correctly into " + unTar.toFile().getAbsolutePath());
+	// 		}
+	// 		Path contentPath;
+	// 		if (StringUtils.hasText(url.getSubPath())) {
+	// 			contentPath = Paths.get(tarDir.get().toFile().getAbsolutePath(), url.getSubPath());
+	// 		}
+	// 		else {
+	// 			contentPath = tarDir.get();
+	// 		}
+	// 		return contentPath;
+	// 	}
+	// 	catch (IOException | URISyntaxException e) {
+	// 		throw new UpException("Failed processing " + url, e);
+	// 	}
+	// }
 
 	/**
 	 * Retrieve contents from a GitLab repository.

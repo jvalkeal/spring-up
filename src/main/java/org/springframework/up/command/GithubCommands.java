@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jline.utils.AttributedString;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
+// import org.kohsuke.github.GitHub;
+// import org.kohsuke.github.GitHubBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,13 +140,13 @@ public class GithubCommands extends AbstractUpCliCommands {
 		}
 		else {
 			String loginName = null;
-			try {
-				GitHub gh = new GitHubBuilder().withOAuthToken(host.getOauthToken()).build();
-				loginName = gh.getMyself().getLogin();
-				log.debug("Got loginName {}", loginName);
-			} catch (IOException e) {
-				log.error("Error getting github login", e);
-			}
+			// try {
+			// 	GitHub gh = new GitHubBuilder().withOAuthToken(host.getOauthToken()).build();
+			// 	loginName = gh.getMyself().getLogin();
+			// 	log.debug("Got loginName {}", loginName);
+			// } catch (IOException e) {
+			// 	log.error("Error getting github login", e);
+			// }
 			AttributedString ret = styledString("You are logged into github as ", null);
 			ret = join(ret, styledString(loginName, ThemeSettings.TAG_HIGHLIGHT));
 			if (showToken) {
