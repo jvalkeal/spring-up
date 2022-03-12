@@ -28,13 +28,13 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.gitlab4j.api.Constants.ArchiveFormat;
-import org.gitlab4j.api.Constants.SortOrder;
-import org.gitlab4j.api.Constants.TagOrderBy;
-import org.gitlab4j.api.GitLabApi;
-import org.gitlab4j.api.GitLabApiException;
-import org.gitlab4j.api.models.Branch;
-import org.gitlab4j.api.models.Tag;
+// import org.gitlab4j.api.Constants.ArchiveFormat;
+// import org.gitlab4j.api.Constants.SortOrder;
+// import org.gitlab4j.api.Constants.TagOrderBy;
+// import org.gitlab4j.api.GitLabApi;
+// import org.gitlab4j.api.GitLabApiException;
+// import org.gitlab4j.api.models.Branch;
+// import org.gitlab4j.api.models.Tag;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
@@ -75,7 +75,7 @@ public class UrlRepositoryService implements SourceRepositoryService {
 			throw new UpException("Failed to create temp directory: " + e.getMessage(), e);
 		}
 
-		Path contentPath;
+		Path contentPath = null;
 		if (sourceRepoUrl.startsWith("file:")) {
 			contentPath = retrieveFileContents(sourceRepoUrl, targetPath);
 		}
@@ -84,9 +84,9 @@ public class UrlRepositoryService implements SourceRepositoryService {
 			if (gitRepoUrlRef.getRepoUrl().toString().contains("github.com")) {
 				contentPath = retrieveGitHubRepositoryContents(gitRepoUrlRef, targetPath);
 			}
-			else {
-				contentPath = retrieveGitLabRepositoryContents(gitRepoUrlRef, targetPath);
-			}
+			// else {
+			// 	contentPath = retrieveGitLabRepositoryContents(gitRepoUrlRef, targetPath);
+			// }
 		}
 		logger.debug("Source from " + sourceRepoUrl + " retrieved into " + contentPath.toFile().getAbsolutePath());
 		return contentPath;
@@ -172,63 +172,63 @@ public class UrlRepositoryService implements SourceRepositoryService {
 	/**
 	 * Retrieve contents from a GitLab repository.
 	 */
-	private Path retrieveGitLabRepositoryContents(GitRepoUrlRef url, Path targetPath) {
-		try {
-			URI gitUri = new URI(url.getRepoUrl().toString());
-			String token = this.templateRepositoryProperties.getTokens().get(gitUri.getHost());
-			if (token == null) {
-				throw new UpException("Access token not provided for " + gitUri);
-			}
-			GitLabApi gitLabApi = new GitLabApi(gitUri.getScheme() + "://" + gitUri.getHost(), token);
-			String repo = gitUri.getPath().substring(1);
-			if (repo.endsWith(".git")) {
-				repo = repo.substring(0, repo.length() - 4);
-			}
+	// private Path retrieveGitLabRepositoryContents(GitRepoUrlRef url, Path targetPath) {
+	// 	try {
+	// 		URI gitUri = new URI(url.getRepoUrl().toString());
+	// 		String token = this.templateRepositoryProperties.getTokens().get(gitUri.getHost());
+	// 		if (token == null) {
+	// 			throw new UpException("Access token not provided for " + gitUri);
+	// 		}
+	// 		GitLabApi gitLabApi = new GitLabApi(gitUri.getScheme() + "://" + gitUri.getHost(), token);
+	// 		String repo = gitUri.getPath().substring(1);
+	// 		if (repo.endsWith(".git")) {
+	// 			repo = repo.substring(0, repo.length() - 4);
+	// 		}
 
-			String refSha = null;
-			if (StringUtils.hasText(url.getRef())) {
-				List<Branch> branches = gitLabApi.getRepositoryApi().getBranches(repo, url.getRef());
-				if (branches.size() == 1) {
-					refSha = branches.get(0).getCommit().getId();
-				}
-				else {
-					List<Tag> tags = gitLabApi.getTagsApi().getTags(repo, TagOrderBy.NAME, SortOrder.ASC, url.getRef());
-					if (tags.size() == 1) {
-						refSha = tags.get(0).getCommit().getId();
-					}
-					else {
-						throw new UpException("Not able to find ref " + url.getRef() + " for " + repo);
-					}
-				}
-			}
-			File tarfile = gitLabApi.getRepositoryApi().getRepositoryArchive(repo, refSha, targetPath.toFile(),
-					ArchiveFormat.TAR_GZ);
-			logger.debug("Wrote GitLab Repo " + repo + " to " + tarfile.getAbsolutePath());
+	// 		String refSha = null;
+	// 		if (StringUtils.hasText(url.getRef())) {
+	// 			List<Branch> branches = gitLabApi.getRepositoryApi().getBranches(repo, url.getRef());
+	// 			if (branches.size() == 1) {
+	// 				refSha = branches.get(0).getCommit().getId();
+	// 			}
+	// 			else {
+	// 				List<Tag> tags = gitLabApi.getTagsApi().getTags(repo, TagOrderBy.NAME, SortOrder.ASC, url.getRef());
+	// 				if (tags.size() == 1) {
+	// 					refSha = tags.get(0).getCommit().getId();
+	// 				}
+	// 				else {
+	// 					throw new UpException("Not able to find ref " + url.getRef() + " for " + repo);
+	// 				}
+	// 			}
+	// 		}
+	// 		File tarfile = gitLabApi.getRepositoryApi().getRepositoryArchive(repo, refSha, targetPath.toFile(),
+	// 				ArchiveFormat.TAR_GZ);
+	// 		logger.debug("Wrote GitLab Repo " + repo + " to " + tarfile.getAbsolutePath());
 
-			File targetFile = targetPath.toFile();
-			Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
-			try {
-				archiver.extract(tarfile, targetPath.toFile());
-			} catch (Exception e) {
-				throw new UpException(String.format("Extraction error to %s", targetFile.getAbsolutePath()), e);
-			}
+	// 		File targetFile = targetPath.toFile();
+	// 		Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
+	// 		try {
+	// 			archiver.extract(tarfile, targetPath.toFile());
+	// 		} catch (Exception e) {
+	// 			throw new UpException(String.format("Extraction error to %s", targetFile.getAbsolutePath()), e);
+	// 		}
 
-			String zipDirName = tarfile.getName().substring(0, tarfile.getName().indexOf('.'));
-			if (!tarfile.delete()) {
-				logger.warn("Not able to delete zip file " + tarfile.getAbsolutePath());
-			}
-			Path contentPath;
-			if (StringUtils.hasText(url.getSubPath())) {
-				contentPath = Paths.get(targetPath.toFile().getAbsolutePath(), zipDirName, url.getSubPath());
-			}
-			else {
-				contentPath = Paths.get(targetPath.toFile().getAbsolutePath(), zipDirName);
-			}
-			return contentPath;
-		}
-		catch (URISyntaxException | GitLabApiException e) {
-			throw new UpException("Failed processing " + url, e);
-		}
-	}
+	// 		String zipDirName = tarfile.getName().substring(0, tarfile.getName().indexOf('.'));
+	// 		if (!tarfile.delete()) {
+	// 			logger.warn("Not able to delete zip file " + tarfile.getAbsolutePath());
+	// 		}
+	// 		Path contentPath;
+	// 		if (StringUtils.hasText(url.getSubPath())) {
+	// 			contentPath = Paths.get(targetPath.toFile().getAbsolutePath(), zipDirName, url.getSubPath());
+	// 		}
+	// 		else {
+	// 			contentPath = Paths.get(targetPath.toFile().getAbsolutePath(), zipDirName);
+	// 		}
+	// 		return contentPath;
+	// 	}
+	// 	catch (URISyntaxException | GitLabApiException e) {
+	// 		throw new UpException("Failed processing " + url, e);
+	// 	}
+	// }
 
 }
