@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.tools.ant.DirectoryScanner;
+// import org.apache.tools.ant.DirectoryScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,32 +36,32 @@ public class RootPackageFinder {
 	private static final Logger logger = LoggerFactory.getLogger(RootPackageFinder.class);
 
 	public Optional<String> findRootPackage(File baseDirectory) {
-		DirectoryScanner ds = new DirectoryScanner();
-		String[] includes = { "**\\*.java" };
-		ds.setBasedir(baseDirectory);
-		ds.setIncludes(includes);
-		ds.scan();
-		String[] fileNames = ds.getIncludedFiles();
+		// DirectoryScanner ds = new DirectoryScanner();
+		// String[] includes = { "**\\*.java" };
+		// ds.setBasedir(baseDirectory);
+		// ds.setIncludes(includes);
+		// ds.scan();
+		// String[] fileNames = ds.getIncludedFiles();
 
-		for (String fileName : fileNames) {
-			logger.debug("Looking for @SpringBootApplication in file = " + fileName);
-			try {
-				File fileToTest = new File(baseDirectory, fileName);
-				List<String> lines = Files.lines(fileToTest.toPath())
-						.filter(line -> line.contains("@SpringBootApplication"))
-						.collect(Collectors.toList());
-				if (lines.isEmpty()) {
-					continue;
-				} else {
-					return Optional.of(extractRootPackageName(new File(fileName)));
-				}
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-				throw new UpException("Exception reading " + fileName + " " + e.getMessage(), e);
+		// for (String fileName : fileNames) {
+		// 	logger.debug("Looking for @SpringBootApplication in file = " + fileName);
+		// 	try {
+		// 		File fileToTest = new File(baseDirectory, fileName);
+		// 		List<String> lines = Files.lines(fileToTest.toPath())
+		// 				.filter(line -> line.contains("@SpringBootApplication"))
+		// 				.collect(Collectors.toList());
+		// 		if (lines.isEmpty()) {
+		// 			continue;
+		// 		} else {
+		// 			return Optional.of(extractRootPackageName(new File(fileName)));
+		// 		}
+		// 	}
+		// 	catch (IOException e) {
+		// 		e.printStackTrace();
+		// 		throw new UpException("Exception reading " + fileName + " " + e.getMessage(), e);
 
-			}
-		}
+		// 	}
+		// }
 		return Optional.empty();
 	}
 
