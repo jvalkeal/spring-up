@@ -2,11 +2,11 @@ name: CI
 
 on:
   workflow_dispatch:
-  push:
-    paths-ignore:
-      - '.github/**'
-  schedule:
-    - cron: '0 0 * * *'
+  # push:
+  #   paths-ignore:
+  #     - '.github/**'
+  # schedule:
+  #   - cron: '0 0 * * *'
 
 jobs:
   build:

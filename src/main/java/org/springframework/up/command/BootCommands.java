@@ -303,16 +303,16 @@ public class BootCommands extends AbstractUpCliCommands {
 		};
 		InMemoryExecutionContext executionContext = new InMemoryExecutionContext(onError);
 		List<? extends SourceFile> compilationUnits = javaParser.parse(collector.getMatches(), null, executionContext);
-		ResultsExecutor container = new ResultsExecutor();
+		// ResultsExecutor container = new ResultsExecutor();
 
-		Recipe recipe = new ChangePackage(fromPackage, targetPackageName, true);
-		container.addAll(recipe.run(compilationUnits));
-		try {
-			container.execute();
-		}
-		catch (IOException e) {
-			throw new UpException("Error performing refactoring", e);
-		}
+		// Recipe recipe = new ChangePackage(fromPackage, targetPackageName, true);
+		// container.addAll(recipe.run(compilationUnits));
+		// try {
+		// 	container.execute();
+		// }
+		// catch (IOException e) {
+		// 	throw new UpException("Error performing refactoring", e);
+		// }
 
 		//TODO change groupId and artifactId
 	}
