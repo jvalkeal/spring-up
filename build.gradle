@@ -43,7 +43,7 @@ dependencies {
 	implementation 'org.rauschig:jarchivelib'
 	implementation 'org.kohsuke:github-api'
 	implementation 'org.gitlab4j:gitlab4j-api'
-	implementation 'org.openrewrite:rewrite-java-11'
+	// implementation 'org.openrewrite:rewrite-java-11'
 	implementation 'org.apache.ant:ant'
 	implementation 'org.apache.maven:maven-model'
 	implementation 'org.apache.tika:tika-core'
@@ -59,7 +59,7 @@ dependencyManagement {
 		dependency "org.rauschig:jarchivelib:${jarchivelibVersion}"
 		dependency "org.kohsuke:github-api:${kohsukeVersion}"
 		dependency "org.gitlab4j:gitlab4j-api:${gitlab4jVersion}"
-		dependency "org.openrewrite:rewrite-java-11:${openrewriteVersion}"
+		// dependency "org.openrewrite:rewrite-java-11:${openrewriteVersion}"
 		dependency "org.apache.ant:ant:${antVersion}"
 		dependency "org.apache.maven:maven-model:${mavenModelVersion}"
 		dependency "org.apache.tika:tika-core:${tikaVersion}"
