@@ -288,9 +288,12 @@ public class BootCommands extends AbstractUpCliCommands {
 		return rootPackage;
 	}
 
+	private JavaParser javaParser = new Java11Parser.Builder().build();
+
+
 	private void refactorPackage(String targetPackageName, String fromPackage, Path workingPath) {
 		logger.debug("Refactoring to package name " + targetPackageName);
-		JavaParser javaParser = new Java11Parser.Builder().build();
+		// JavaParser javaParser = new Java11Parser.Builder().build();
 		FileTypeCollectingFileVisitor collector = new FileTypeCollectingFileVisitor(".java");
 		try {
 			Files.walkFileTree(workingPath, collector);
@@ -302,6 +305,7 @@ public class BootCommands extends AbstractUpCliCommands {
 			logger.error("error in javaParser execution", e);
 		};
 		InMemoryExecutionContext executionContext = new InMemoryExecutionContext(onError);
+		javaParser.reset();
 		List<? extends SourceFile> compilationUnits = javaParser.parse(collector.getMatches(), null, executionContext);
 		ResultsExecutor container = new ResultsExecutor();
 
