@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.openrewrite.Result;
+// import org.openrewrite.Result;
 
 import org.springframework.up.UpException;
 
@@ -39,7 +39,7 @@ import org.springframework.up.UpException;
  */
 public class ResultsExecutor {
 
-	private final List<Result> results = new ArrayList<>();
+	// private final List<Result> results = new ArrayList<>();
 
 	/**
 	 * Whether to delete empty dirs recursively upwards after a file has been deleted (or
@@ -63,19 +63,19 @@ public class ResultsExecutor {
 	private void check() {
 		Set<Path> destinations = new HashSet<>();
 		Set<Path> deletions = new HashSet<>();
-		for (Result result : results) {
-			if (result.getAfter() != null) {
-				if (!destinations.add(result.getAfter().getSourcePath())) {
-					throw new UpException("Several files end up creating " + result.getAfter().getSourcePath());
-				}
-			}
-			else {
-				if (!deletions.add(result.getBefore().getSourcePath())) {
-					// This should be even more unexpected than the above
-					throw new UpException("Several files end up deleting " + result.getBefore().getSourcePath());
-				}
-			}
-		}
+		// for (Result result : results) {
+		// 	if (result.getAfter() != null) {
+		// 		if (!destinations.add(result.getAfter().getSourcePath())) {
+		// 			throw new UpException("Several files end up creating " + result.getAfter().getSourcePath());
+		// 		}
+		// 	}
+		// 	else {
+		// 		if (!deletions.add(result.getBefore().getSourcePath())) {
+		// 			// This should be even more unexpected than the above
+		// 			throw new UpException("Several files end up deleting " + result.getBefore().getSourcePath());
+		// 		}
+		// 	}
+		// }
 		destinations.retainAll(deletions);
 		if (!destinations.isEmpty()) {
 			throw new UpException(
@@ -83,28 +83,28 @@ public class ResultsExecutor {
 		}
 	}
 
-	public void addAll(Collection<Result> more) {
-		results.addAll(more);
-	}
+	// public void addAll(Collection<Result> more) {
+	// 	results.addAll(more);
+	// }
 
 	public void execute() throws IOException {
 		check();
 
-		for (Result result : results) {
-			if (result.getAfter() == null || fileMoved(result)) {
-				Files.delete(result.getBefore().getSourcePath());
-				if (deleteEmptyDirs) {
-					deleteUpwardsUntilNotEmpty(result.getBefore().getSourcePath().getParent());
-				}
-			}
-			if (result.getAfter() != null) {
-				Path afterPath = result.getAfter().getSourcePath();
-				afterPath.toFile().getParentFile().mkdirs();
-				try (BufferedWriter sourceFileWriter = Files.newBufferedWriter(afterPath)) {
-					sourceFileWriter.write(result.getAfter().print());
-				}
-			}
-		}
+		// for (Result result : results) {
+		// 	if (result.getAfter() == null || fileMoved(result)) {
+		// 		Files.delete(result.getBefore().getSourcePath());
+		// 		if (deleteEmptyDirs) {
+		// 			deleteUpwardsUntilNotEmpty(result.getBefore().getSourcePath().getParent());
+		// 		}
+		// 	}
+		// 	if (result.getAfter() != null) {
+		// 		Path afterPath = result.getAfter().getSourcePath();
+		// 		afterPath.toFile().getParentFile().mkdirs();
+		// 		try (BufferedWriter sourceFileWriter = Files.newBufferedWriter(afterPath)) {
+		// 			sourceFileWriter.write(result.getAfter().print());
+		// 		}
+		// 	}
+		// }
 	}
 
 	/**
@@ -134,9 +134,9 @@ public class ResultsExecutor {
 	/**
 	 * Returns true if the {@code Result} represents a file move.
 	 */
-	private boolean fileMoved(Result result) {
-		return result.getBefore() != null
-				&& !result.getBefore().getSourcePath().equals(result.getAfter().getSourcePath());
-	}
+	// private boolean fileMoved(Result result) {
+	// 	return result.getBefore() != null
+	// 			&& !result.getBefore().getSourcePath().equals(result.getAfter().getSourcePath());
+	// }
 
 }

@@ -30,12 +30,12 @@ import java.util.function.Consumer;
 // import org.codehaus.plexus.util.DirectoryScanner;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
-import org.openrewrite.InMemoryExecutionContext;
-import org.openrewrite.Recipe;
-import org.openrewrite.SourceFile;
-import org.openrewrite.java.ChangePackage;
-import org.openrewrite.java.Java11Parser;
-import org.openrewrite.java.JavaParser;
+// import org.openrewrite.InMemoryExecutionContext;
+// import org.openrewrite.Recipe;
+// import org.openrewrite.SourceFile;
+// import org.openrewrite.java.ChangePackage;
+// import org.openrewrite.java.Java11Parser;
+// import org.openrewrite.java.JavaParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -290,29 +290,29 @@ public class BootCommands extends AbstractUpCliCommands {
 
 	private void refactorPackage(String targetPackageName, String fromPackage, Path workingPath) {
 		logger.debug("Refactoring to package name " + targetPackageName);
-		JavaParser javaParser = new Java11Parser.Builder().build();
-		FileTypeCollectingFileVisitor collector = new FileTypeCollectingFileVisitor(".java");
-		try {
-			Files.walkFileTree(workingPath, collector);
-		}
-		catch (IOException e) {
-			throw new UpException("Failed reading files in " + workingPath, e);
-		}
-		Consumer<Throwable> onError = e -> {
-			logger.error("error in javaParser execution", e);
-		};
-		InMemoryExecutionContext executionContext = new InMemoryExecutionContext(onError);
-		List<? extends SourceFile> compilationUnits = javaParser.parse(collector.getMatches(), null, executionContext);
-		ResultsExecutor container = new ResultsExecutor();
+		// JavaParser javaParser = new Java11Parser.Builder().build();
+		// FileTypeCollectingFileVisitor collector = new FileTypeCollectingFileVisitor(".java");
+		// try {
+		// 	Files.walkFileTree(workingPath, collector);
+		// }
+		// catch (IOException e) {
+		// 	throw new UpException("Failed reading files in " + workingPath, e);
+		// }
+		// Consumer<Throwable> onError = e -> {
+		// 	logger.error("error in javaParser execution", e);
+		// };
+		// InMemoryExecutionContext executionContext = new InMemoryExecutionContext(onError);
+		// List<? extends SourceFile> compilationUnits = javaParser.parse(collector.getMatches(), null, executionContext);
+		// ResultsExecutor container = new ResultsExecutor();
 
-		Recipe recipe = new ChangePackage(fromPackage, targetPackageName, true);
-		container.addAll(recipe.run(compilationUnits));
-		try {
-			container.execute();
-		}
-		catch (IOException e) {
-			throw new UpException("Error performing refactoring", e);
-		}
+		// Recipe recipe = new ChangePackage(fromPackage, targetPackageName, true);
+		// container.addAll(recipe.run(compilationUnits));
+		// try {
+		// 	container.execute();
+		// }
+		// catch (IOException e) {
+		// 	throw new UpException("Error performing refactoring", e);
+		// }
 
 		//TODO change groupId and artifactId
 	}
