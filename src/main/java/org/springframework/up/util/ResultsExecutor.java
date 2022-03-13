@@ -101,7 +101,7 @@ public class ResultsExecutor {
 				Path afterPath = result.getAfter().getSourcePath();
 				afterPath.toFile().getParentFile().mkdirs();
 				try (BufferedWriter sourceFileWriter = Files.newBufferedWriter(afterPath)) {
-					// sourceFileWriter.write(result.getAfter().print());
+					sourceFileWriter.write(result.getAfter().printAll());
 				}
 			}
 		}
